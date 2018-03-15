@@ -1,10 +1,11 @@
 {
-  "name": "truffle-flattener",
+  "name": "tokyo-truffle-flattener",
   "version": "1.2.3",
-  "description": "Truffle Flattener concats solidity files developed under Truffle with all of their dependencies",
+  "description": "To using in Tokyo project fork from Truffle Flattener",
   "bin": {
-    "truffle-flattener": "index.js"
+    "tokyo-flattener": "exc.js"
   },
+  "main": "index.js",
   "keywords": [
     "ethereum",
     "solidity",

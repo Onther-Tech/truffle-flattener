@@ -104,7 +104,8 @@ async function printFileWithoutPragma(filePath) {
     .replace(PRAGAMA_SOLIDITY_VERSION_REGEX, "")
     .replace(IMPORT_SOLIDITY_REGEX, "");
 
-  console.log(output.trim());
+  // console.log(output.trim());
+  return output.trim();
 }
 
 async function getFileCompilerVersionDeclaration(filePath) {
@@ -186,15 +187,19 @@ async function normalizeCompilerVersionDeclarations(files) {
 
 async function printContactenation(files) {
   const version = await normalizeCompilerVersionDeclarations(files);
+  var output;
 
   if (version) {
-    console.log("pragma solidity " + version + ";");
+    // console.log("pragma solidity " + version + ";");
+    output = "pragma solidity " + version + ";";
   }
 
   for (const file of files) {
-    console.log("\n// File: " + file + "\n");
-    await printFileWithoutPragma(file);
+    // console.log("\n// File: " + file + "\n");
+    output = output + "\n\n\n" + await printFileWithoutPragma(file);
   }
+
+  return output;
 }
 
 async function getTruffleRoot() {
@@ -217,14 +222,35 @@ function getFilePathsFromTruffleRoot(filePaths, truffleRoot) {
   return filePaths.map(f => path.relative(truffleRoot, path.resolve(f)));
 }
 
-async function main(filePaths) {
+function getFileName(filePath){
+    return filePath.map(f => f.substring(f.lastIndexOf(path.sep)+1,f.lastIndexOf('.')));
+}
+
+function writeFile(output, fileName){
+  var dir = "./out/"
+  if(!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
+
+  fs.writeFileSync(dir+'Flatten'+fileName[0]+'.sol', output, function(err){
+    console.log("Flattening is done!");
+  })
+}
+
+async function Flattener(filePaths) {
   if (!filePaths.length) {
     console.error("Usage: truffle-flattener <files>");
     return;
   }
 
+  //for all at once
+  if(typeof filePaths=='string'){
+    filePaths = [filePaths];
+  }
+
   try {
     const truffleRoot = await getTruffleRoot();
+    const fileName = getFileName(filePaths);
     const filePathsFromTruffleRoot = getFilePathsFromTruffleRoot(
       filePaths,
       truffleRoot
@@ -233,10 +259,11 @@ async function main(filePaths) {
     process.chdir(truffleRoot);
 
     const sortedFiles = await getSortedFilePaths(filePathsFromTruffleRoot);
-    await printContactenation(sortedFiles);
+    var output = await printContactenation(sortedFiles);
+    writeFile(output, fileName);
   } catch (error) {
     console.log(error, error.stack);
   }
 }
 
-main(process.argv.slice(2));
+module.exports = Flattener;
