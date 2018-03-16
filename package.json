@@ -1,6 +1,6 @@
 {
   "name": "tokyo-truffle-flattener",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "To using in Tokyo project fork from Truffle Flattener Author Patricio Palladino ",
   "bin": {
     "tokyo-flattener": "exc.js"
