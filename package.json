@@ -1,7 +1,7 @@
 {
   "name": "tokyo-truffle-flattener",
   "version": "1.2.3",
-  "description": "To using in Tokyo project fork from Truffle Flattener",
+  "description": "To using in Tokyo project fork from Truffle Flattener Author Patricio Palladino ",
   "bin": {
     "tokyo-flattener": "exc.js"
   },
@@ -12,9 +12,9 @@
     "truffle",
     "smart-contracts"
   ],
-  "homepage": "https://github.com/alcuadrado/truffle-flattener",
-  "repository": "github:alcuadrado/truffle-flattener",
-  "author": "Patricio Palladino",
+  "homepage": "https://github.com/Onther-tech/truffle-flattener",
+  "repository": "https://github.com/Onther-tech/truffle-flattener",
+  "author": "kemuxx",
   "license": "MIT",
   "dependencies": {
     "find-up": "^2.1.0",
